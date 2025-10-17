@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Викторины - Исторические Баталии</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="quiz-style.css">
+</head>
+<body>
+    <!-- Анимированный фон -->
+    <div class="animated-bg">
+        <div class="bg-shape shape-1"></div>
+        <div class="bg-shape shape-2"></div>
+        <div class="bg-shape shape-3"></div>
+        <div class="bg-shape shape-4"></div>
+    </div>
+
+    <!-- Плавающие частицы -->
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo" onclick="window.location.href='index.html'">
+                    <div class="logo-icon">
+                        <div class="logo-shine"></div>
+                        🏛️
+                    </div>
+                    <div class="logo-text">
+                        <h1>Викторины</h1>
+                        <p>11 класс - История и Обществоведение</p>
+                    </div>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Главная</a></li>
+                        <li><a href="quiz.html" class="active">Викторины</a></li>
+                        <li><a href="leaders.html">Таблица лидеров</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Экран выбора викторины -->
+        <div id="quiz-selection" class="screen active">
+            <div class="quiz-selection-header">
+                <h2>Выберите параграф</h2>
+                <p>бла-бла-бла</p>
+            </div>
+
+            <div class="quiz-grid">
+                <div class="quiz-card" onclick="startQuiz('paragraph_14')">
+                    <div class="quiz-glow"></div>
+                    <div class="quiz-image">
+                        <div class="quiz-badge">§ 14</div>
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);display:flex;align-items:center;justify-content:center;font-size:3rem;color:white;"></div>
+                    </div>
+                    <div class="quiz-content">
+                        <h3 class="quiz-title">§ 14. Развитие культуры Беларуси</h3>
+                        <p>Описание</p>
+                        <div class="quiz-meta">
+                            <span>25 вопросов</span>
+                            <span>⏱ 30 мин</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quiz-card" onclick="startQuiz('paragraph_15')">
+                    <div class="quiz-glow"></div>
+                    <div class="quiz-image">
+                        <div class="quiz-badge">§ 15</div>
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, #f093fb 0%, #f5576c 100%);display:flex;align-items:center;justify-content:center;font-size:3rem;color:white;"></div>
+                    </div>
+                    <div class="quiz-content">
+                        <h3 class="quiz-title">§ 15. Средневековье</h3>
+                        <p>Описание</p>
+                        <div class="quiz-meta">
+                            <span>5 вопросов</span>
+                            <span>⏱ 12 мин</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quiz-card" onclick="startQuiz('paragraph_16')">
+                    <div class="quiz-glow"></div>
+                    <div class="quiz-image">
+                        <div class="quiz-badge">§ 16</div>
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);display:flex;align-items:center;justify-content:center;font-size:3rem;color:white;"></div>
+                    </div>
+                    <div class="quiz-content">
+                        <h3 class="quiz-title">§ 16. Российская Империя</h3>
+                        <p>Описание</p>
+                        <div class="quiz-meta">
+                            <span>5 вопросов</span>
+                            <span>⏱ 15 мин</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран самой викторины -->
+        <div id="quiz-screen" class="screen">
+            <div class="quiz-container">
+                <div class="quiz-header">
+                    <div class="quiz-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progress-fill"></div>
+                        </div>
+                        <span id="progress-text">Вопрос 1/5</span>
+                    </div>
+                    <div class="quiz-controls">
+                        <div class="quiz-timer">
+                            <div class="timer-icon">⏱</div>
+                            <span id="timer">60</span>
+                            <span>сек</span>
+                        </div>
+                        <button class="sound-toggle" id="sound-toggle" onclick="toggleSound()">
+                            <span id="sound-icon">🔊</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="question-container">
+                    <div class="question-image" id="question-image"></div>
+                    <h2 class="question-text" id="question-text"></h2>
+                    
+                    <div class="answers-container" id="answers-container"></div>
+                </div>
+
+                <div class="quiz-feedback" id="quiz-feedback"></div>
+                <div class="answer-explanation" id="answer-explanation"></div>
+
+                <div class="quiz-navigation">
+                    <button class="btn btn-secondary" onclick="restartQuiz()">
+                        <span>↻</span>
+                        <span>Начать заново</span>
+                    </button>
+                    <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()" style="display: none;">
+                        <span>Следующий вопрос</span>
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Экран результатов -->
+        <div id="results-screen" class="screen">
+            <div class="results-container">
+                <div class="results-header">
+                    <div class="results-badge">Викторина завершена!</div>
+                    <h2>Отличная работа!</h2>
+                    <p>Ваш результат сохранён в системе. Продолжайте в том же духе!</p>
+                </div>
+                
+                <div class="results-card">
+                    <div class="result-item">
+                        <span>Правильные ответы:</span>
+                        <strong id="correct-answers">0/5</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Затраченное время:</span>
+                        <strong id="time-spent">0 сек</strong>
+                    </div>
+                    <div class="result-item">
+                        <span>Набрано баллов:</span>
+                        <strong id="total-score">0</strong>
+                    </div>
+                    <div class="result-item highlight">
+                        <span>Итоговый результат:</span>
+                        <strong id="final-grade">Новичок</strong>
+                    </div>
+                </div>
+
+                <div class="name-input">
+                    <h3>Введите букву вашего класса</h3>
+                    <p>Результат будет сохранён.</p>
+                    <div class="input-group">
+                        <input type="text" id="player-class" placeholder="А или Б" maxlength="1" style="text-transform: uppercase;">
+                        <div class="input-hint">Только буквы А или Б</div>
+                    </div>
+                    <div class="results-actions">
+                        <button class="btn btn-primary" onclick="saveResults()">
+                            <span>📊</span>
+                            <span>Сохранить и посмотреть таблицу лидеров</span>
+                        </button>
+                        <button class="btn btn-secondary" onclick="restartQuiz()">
+                            <span>↻</span>
+                            <span>Пройти ещё раз</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        <div class="logo-icon">🏛️</div>
+                        <div class="logo-text">
+                            <h3>Викторины</h3>
+                            <p>бла-бла-бла</p>
+                        </div>
+                    </div>
+                    <div class="footer-links">
+                        <div class="link-group">
+                            <h4>Навигация</h4>
+                            <a href="index.html">Главная</a>
+                            <a href="quiz.html">Викторины</a>
+                            <a href="leaders.html">Таблица лидеров</a>
+                        </div>
+                        <div class="link-group">
+                            <h4>Параграфы</h4>
+                            <a href="quiz.html">§ 14. Культура Беларуси</a>
+                            <a href="quiz.html">§ 15. Средневековье</a>
+                            <a href="quiz.html">§ 16. Российская Империя</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="footer-info">
+                        <p>&copy; 2025 - Все права защищены. Викторины.</p>
+                        <p>История и Обществоведение</p>
+                    </div>
+                    <div class="footer-badge">
+                        <div class="badge-icon">🚀</div>
+                        <span>бла-бла-бла</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Звуковые элементы -->
+    <audio id="correct-sound" preload="auto">
+        <source src="sounds/correct.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио элементы.
+    </audio>
+    <audio id="wrong-sound" preload="auto">
+        <source src="sounds/wrong.mp3" type="audio/mpeg">
+        Ваш браузер не поддерживает аудио элементы.
+    </audio>
+
+    <script src="quiz.js"></script>
+</body>
+</html>
